@@ -41,7 +41,7 @@ class SignupActivity : AppCompatActivity() {
         }
 
         binding.loginRedirect.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 }
