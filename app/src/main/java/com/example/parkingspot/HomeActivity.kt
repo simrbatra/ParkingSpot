@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +28,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         // Set the click listener for the View Favorites button
@@ -149,5 +149,57 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                     true
                 }
             }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to load spots", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    // Handle permission result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                enableMyLocation() // Retry enabling location if permission is granted
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Lifecycle handling for the map fragment
+    override fun onStart() {
+        super.onStart()
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.onStop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("HomeActivity", "onDestroy called")
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.onDestroy()
     }
 }

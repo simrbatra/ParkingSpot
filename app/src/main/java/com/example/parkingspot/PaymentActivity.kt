@@ -23,7 +23,7 @@ class PaymentActivity : AppCompatActivity() {
         binding.payBtn.setOnClickListener {
             Toast.makeText(this, "Payment Successful!", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+
         }
     }
 }

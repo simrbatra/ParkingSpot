@@ -5,11 +5,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyCpBQD8wZH2MWdSrxOgN_eyuyyE7x5YIbQ" />
+
+
 
     <application
         android:allowBackup="true"
@@ -21,7 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkingSpot"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCpBQD8wZH2MWdSrxOgN_eyuyyE7x5YIbQ" />
         <activity
+
             android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
