@@ -41,7 +41,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         // Initialize the map fragment
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+
+        if (mapFragment != null) {
+            mapFragment.getMapAsync { googleMap ->
+                mapFragment.getMapAsync(this)
+            }
+        } else {
+            Log.e("HomeActivity", "SupportMapFragment is null!")
+        }
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -117,8 +125,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                         builder.setItems(arrayOf("Book Spot", "Save as Favorite")) { _, which ->
                             when (which) {
                                 0 -> {
+                                    Log.e("inside","->"+which)
                                     // Book the spot
-                                    firestore.collection("spots").document(it)
+                                    /*firestore.collection("spots").document(it)
                                         .update("isBooked", true)
                                         .addOnSuccessListener {
                                             Toast.makeText(this, "Spot Booked!", Toast.LENGTH_SHORT).show()
@@ -127,9 +136,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                                             val intent = Intent(this, PaymentActivity::class.java)
                                             intent.putExtra("spotName", marker.title)
                                             startActivity(intent)
-                                        }
+                                        }*/
+                                    val intent = Intent(this, PaymentActivity::class.java)
+                                    intent.putExtra("spotName", marker.title)
+                                    startActivity(intent)
                                 }
                                 1 -> {
+                                    Log.e("inside","->"+which)
                                     // Save as favorite
                                     val userId = FirebaseAuth.getInstance().currentUser?.uid
                                     if (userId != null) {
@@ -139,8 +152,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                                                 Toast.makeText(this, "Saved to Favorites!", Toast.LENGTH_SHORT).show()
                                             }
                                     } else {
+                                        Log.e("inside","->"+which)
                                         Toast.makeText(this, "Please log in to save as favorite", Toast.LENGTH_SHORT).show()
                                     }
+
+                                    val intent = Intent(this, PaymentActivity::class.java)
+                                    intent.putExtra("spotName", marker.title)
+                                    startActivity(intent)
                                 }
                             }
                         }
@@ -198,8 +216,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("HomeActivity", "onDestroy called")
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.onDestroy()
+        (supportFragmentManager.findFragmentById(R.id.mapFragment) as? SupportMapFragment)?.onDestroy()
+
     }
 }

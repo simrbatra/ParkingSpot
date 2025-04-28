@@ -1,6 +1,7 @@
 package com.example.parkingspot
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.parkingspot.databinding.ActivityFavoritesBinding
@@ -19,6 +20,16 @@ class FavoritesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firestore = FirebaseFirestore.getInstance()
+
+        binding.logoutBtn.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
 
         firestore.collection("spots")
             .whereArrayContains("favoritedBy", currentUserId ?: "")
