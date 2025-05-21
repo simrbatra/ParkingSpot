@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="24dp"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:id="@+id/payment_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/spotName"
-        android:text="Parking Spot:"
-        android:textSize="20sp"
-        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Parking Spot: A1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp" />
 
     <TextView
         android:id="@+id/amount"
-        android:text="₹ 50.00"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="₹ 50.00"
+        android:textSize="18sp"
+        android:paddingBottom="24dp" />
 
     <Button
         android:id="@+id/payBtn"
-        android:text="Pay Now"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pay with Google Pay" />
 </LinearLayout>
